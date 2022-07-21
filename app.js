@@ -35,8 +35,8 @@ const start = async () => {
   apolloServer.applyMiddleware({ app });
 
   app.get("*", (req, res) => res.status(404).send("not found"));
-  app.listen({port: process.env.PORT || 4000}, ({url}) => {
-    console.log("Running server on port", url);
+  app.listen({ port: process.env.PORT || 4000 }, () => {
+    console.log("Running server on port");
   });
 };
 
