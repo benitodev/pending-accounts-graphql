@@ -18,6 +18,8 @@ const start = async () => {
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
+    cache: "bounded",
+    csrfPrevention: true,
     context: async ({ req }) => {
       const auth = req ? req.headers.authorization : null;
       if (auth && auth.toLowerCase().startsWith("bearer ")) {
@@ -33,8 +35,8 @@ const start = async () => {
   apolloServer.applyMiddleware({ app });
 
   app.get("*", (req, res) => res.status(404).send("not found"));
-  app.listen(4000, () => {
-    console.log("Running server on port", 4000);
+  app.listen({port: process.env.PORT || 4000}, ({url}) => {
+    console.log("Running server on port", url);
   });
 };
 
